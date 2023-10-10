@@ -3,8 +3,17 @@ from dotenv import load_dotenv
 import os
 from flask import Flask, jsonify, request
 import requests
+import logging
+import sys
 
 app = Flask(__name__)
+
+# Configure the logging level and format
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
 
 load_dotenv()
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
@@ -14,6 +23,7 @@ APP_SECRET = os.getenv("APP_SECRET")
 RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 VERSION = os.getenv("VERSION")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
 
 def get_text_message_input(recipient, text):
@@ -56,7 +66,8 @@ def process_whatsapp_message(body):
     send_message(data)
 
 
-# handle incoming webhook messages
+# Handle incoming webhook messages
+# Taken from: https://github.com/gustavz/whatsbot/blob/main/app.py
 def handle_message(request):
     # Parse Request body in json format
     body = request.get_json()
@@ -73,6 +84,7 @@ def handle_message(request):
                 and body["entry"][0]["changes"][0]["value"].get("messages")
                 and body["entry"][0]["changes"][0]["value"]["messages"][0]
             ):
+                # TODO: Update custom processing part here
                 process_whatsapp_message(body)
             return jsonify({"status": "ok"}), 200
         else:
@@ -90,6 +102,7 @@ def handle_message(request):
 # Required webhook verifictaion for WhatsApp
 # info on verification request payload:
 # https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests
+# Taken from: https://github.com/gustavz/whatsbot/blob/main/app.py
 def verify(request):
     # Parse params from the webhook verification request
     mode = request.args.get("hub.mode")
@@ -98,7 +111,7 @@ def verify(request):
     # Check if a token and mode were sent
     if mode and token:
         # Check the mode and token sent are correct
-        if mode == "subscribe" and token == verify_token:
+        if mode == "subscribe" and token == VERIFY_TOKEN:
             # Respond with 200 OK and challenge token from the request
             print("WEBHOOK_VERIFIED")
             return challenge, 200
@@ -122,4 +135,5 @@ def webhook():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    logging.info("Flask app started")
+    app.run(host="0.0.0.0", port=8000)

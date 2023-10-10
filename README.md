@@ -51,18 +51,63 @@ On the System Users page, configure the assets to your System User, assigning yo
 Now we have to find the following information:
 
 These can be found at the app page:
-APP_ID: "<<YOUR-WHATSAPP-BUSINESS-APP_ID>>" # Found at app page
-APP_SECRET: "<<YOUR-WHATSAPP-BUSINESS-APP_SECRET>>" # Found at app page
+APP_ID: "<YOUR-WHATSAPP-BUSINESS-APP_ID>" # Found at App Dashboard
+APP_SECRET: "<YOUR-WHATSAPP-BUSINESS-APP_SECRET>" # Found at App Dashboard
 
-RECIPIENT_WAID: "<<YOUR-RECIPIENT-TEST-PHONE-NUMBER>>" # This is your WhatsApp ID (i.e. phone number). Make sure it is added to the account as shown in the send the example test message.
+RECIPIENT_WAID: "<YOUR-RECIPIENT-TEST-PHONE-NUMBER>>" # This is your WhatsApp ID (i.e. phone number). Make sure it is added to the account as shown in the send the example test message.
 
 VERSION: "v16.0", # The latest version of the Meta Graph API
-ACCESS_TOKEN: "<<YOUR-SYSTEM-USER-ACCESS-TOKEN>>" # Created in previous step
+ACCESS_TOKEN: "<YOUR-SYSTEM-USER-ACCESS-TOKEN>" # Created in previous step
 
 
 You can only send a template type message as your first message to a user. That's why you have to send a reply first before we continue. Took me 2 hours to figure this out.
 
 
+## Configure a Webhook
 
-## Adding Phone Numbers
+In the App Dashboard, go to WhatsApp > Configuration, then click the Edit button.
+
+Callback URL: This is the URL Meta will be sending the events to. See the Webhooks, Getting Started guide for information on creating the URL.
+Verify Token: This string is set up by you, when you create your webhook endpoint.
+You can generate a verify token here ot pick any string you like: https://it-tools.tech/token-generator
+
+After saving, back in the Configuration panel, click the Manage button and subscribe to individual webhook fields. To receive notifications of customer messages, be sure to subscribe to the messages webhook field.
+
+
+## Start local server with Ngrok
+
+Follow these steps:
+
+https://ngrok.com/docs/integrations/whatsapp/webhooks/
+
+1. Create account: https://dashboard.ngrok.com
+2. Claim your free domain: https://dashboard.ngrok.com/cloud-edge/domains
+3. Set up authentication token: `ngrok config add-authtoken <YOUR-TOKEN>`
+
+https://developers.facebook.com/docs/graph-api/webhooks/getting-started
+
+Verification Requests
+Anytime you configure the Webhooks product in your App Dashboard, we'll send a GET request to your endpoint URL. Verification requests include the following query string parameters, appended to the end of your endpoint URL. They will look something like this:
+
+```
+GET https://www.your-clever-domain-name.com/webhooks?
+  hub.mode=subscribe&
+  hub.challenge=1158201444&
+  hub.verify_token=meatyhamhock
+```
+
+First run Flask, then Ngrok
+
+Validating Verification Requests
+Whenever your endpoint receives a verification request, it must:
+- Verify that the hub.verify_token value matches the string you set in the Verify Token field when you configure the Webhooks product in your App Dashboard (you haven't set up this token string yet).
+- Respond with the hub.challenge value.
+
+## Receive a test message
+
+Now that your Webhook is set up, send a message to the test number you have used. You should immediately get a Webhooks notification with the content of your message!
+
+## Phone Numbers
+When you’re ready to use your app for a production use case, you need to use your own phone number to send messages to your users. When choosing a phone number, consider the following:
+
 https://developers.facebook.com/docs/whatsapp/phone-numbers/
