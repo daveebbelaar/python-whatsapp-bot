@@ -8,7 +8,9 @@ Here's all the documentation for the WhatsApp API: https://developers.facebook.c
 
 Here's another helpful guide: https://developers.facebook.com/blog/post/2022/10/24/sending-messages-with-whatsapp-in-your-python-applications/
 
-Set up WhatsApp
+Here's a link to the API docs for sending messages: https://developers.facebook.com/docs/whatsapp/cloud-api/guides/send-messages
+
+Set up WhatsApp app
 
 Select the business account
 
@@ -56,6 +58,11 @@ RECIPIENT_WAID: "<<YOUR-RECIPIENT-TEST-PHONE-NUMBER>>" # This is your WhatsApp I
 
 VERSION: "v16.0", # The latest version of the Meta Graph API
 ACCESS_TOKEN: "<<YOUR-SYSTEM-USER-ACCESS-TOKEN>>" # Created in previous step
+
+
+You can only send a template type message as your first message to a user. That's why you have to send a reply first before we continue. Took me 2 hours to figure this out.
+
+
 
 ## Adding Phone Numbers
 https://developers.facebook.com/docs/whatsapp/phone-numbers/
