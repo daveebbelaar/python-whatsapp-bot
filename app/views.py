@@ -1,7 +1,7 @@
 import logging
 import json
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 
 from .decorators.security import signature_required
 from .utils.whatsapp_utils import (
@@ -63,7 +63,7 @@ def verify():
     # Check if a token and mode were sent
     if mode and token:
         # Check the mode and token sent are correct
-        if mode == "subscribe" and token == app.config["VERIFY_TOKEN"]:
+        if mode == "subscribe" and token == current_app.config["VERIFY_TOKEN"]:
             # Respond with 200 OK and challenge token from the request
             logging.info("WEBHOOK_VERIFIED")
             return challenge, 200
