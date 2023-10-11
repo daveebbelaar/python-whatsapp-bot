@@ -103,11 +103,28 @@ Whenever your endpoint receives a verification request, it must:
 - Verify that the hub.verify_token value matches the string you set in the Verify Token field when you configure the Webhooks product in your App Dashboard (you haven't set up this token string yet).
 - Respond with the hub.challenge value.
 
+After succesful verification of your Callback URL, you must subscribe to events using the Webhook fields. Click on manage and select all the relevent subscriptions; in our case only `messages`.
+
 ## Receive a test message
 
-Now that your Webhook is set up, send a message to the test number you have used. You should immediately get a Webhooks notification with the content of your message!
+If your flask app and ngrok are running, you can click on "Test" next to messages to test the subscription. You recieve a test message in upper case. If that is the case, your webhook is set up correctly.
 
+You can now also send a message via whatsapp to you bot and it should reply instantly in upper case to you.
+
+
+##  Validating Payloads
+We sign all Event Notification payloads with a SHA256 signature and include the signature in the request's X-Hub-Signature-256 header, preceded with sha256=. You don't have to validate the payload, but you should.
+
+To validate the payload:
+
+Generate a SHA256 signature using the payload and your app's App Secret.
+Compare your signature to the signature in the X-Hub-Signature-256 header (everything after sha256=). If the signatures match, the payload is genuine.
+
+## Running the App
+When you want to run the app, just execute the run.py script. It will create the app instance and run the Flask development server.
+Lastly, it's good to note that when you deploy the app to a production environment, you might not use run.py directly (especially if you use something like Gunicorn or uWSGI). Instead, you'd just need the application instance, which is created using create_app(). The details of this vary depending on your deployment strategy, but it's a point to keep in mind.
 ## Phone Numbers
 When you’re ready to use your app for a production use case, you need to use your own phone number to send messages to your users. When choosing a phone number, consider the following:
 
 https://developers.facebook.com/docs/whatsapp/phone-numbers/
+
