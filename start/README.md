@@ -42,12 +42,7 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 - Obtain a 24-hour access token from the API access section.
 - Follow the given example to send messages using `curl`.
 - Convert this into a Python function if desired.
-- A typical message you'd receive:
-
-```
-**Hello World**
-Welcome and congratulations!! This message demonstrates your ability to send a WhatsApp message notification from the Cloud API, hosted by Meta.
-```
+- You will receive a "Hello World" message.
 
 > Note: Expect a 60-120 second delay for the message.
 

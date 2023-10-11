@@ -1,10 +1,10 @@
-## Project Structure Explanation
+# Project Structure Explanation
 
 Welcome to the project! This structure is based on the Flask framework and uses the "Flask Factory Pattern". For those new to Flask or this design pattern, let's break down what each file and directory is for and how they work together.
 
-### Directory Structure:
+## Directory Structure:
 
-#### `app/` 
+### `app/` 
 This is the main application directory containing all the core files for our Flask application.
 
 - `__init__.py`: Initializes the Flask app using the Flask factory pattern. This allows for creating multiple instances of the app if needed, e.g., for testing.
@@ -19,7 +19,7 @@ This is the main application directory containing all the core files for our Fla
 
 - `views.py`: Represents the main blueprint of the app where the endpoints are defined. In Flask, a blueprint is a way to organize related views and operations. Think of it as a mini-application within the main application with its routes and errors.
 
-### Main Files:
+## Main Files:
 
 - `run.py`: This is the entry point to run the Flask application. It sets up and runs our Flask app on a server.
 
@@ -27,7 +27,7 @@ This is the main application directory containing all the core files for our Fla
 
 - `requirements.txt`: Lists all the Python packages and libraries required for this project. They can be installed using `pip`.
 
-### How It Works:
+## How It Works:
 
 1. **Flask Factory Pattern**: Instead of creating a Flask instance globally, we create it inside a function (`create_app` in `__init__.py`). This function can be configured to different configurations, allowing for better flexibility, especially during testing.
 
@@ -39,6 +39,6 @@ This is the main application directory containing all the core files for our Fla
 
 If you're new to Flask or working on larger Flask projects, understanding this structure can give a solid foundation to build upon and maintain scalable Flask applications.
 
-### Running the App
+## Running the App
 When you want to run the app, just execute the run.py script. It will create the app instance and run the Flask development server.
 Lastly, it's good to note that when you deploy the app to a production environment, you might not use run.py directly (especially if you use something like Gunicorn or uWSGI). Instead, you'd just need the application instance, which is created using create_app(). The details of this vary depending on your deployment strategy, but it's a point to keep in mind.
