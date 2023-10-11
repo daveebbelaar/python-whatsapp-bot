@@ -27,7 +27,7 @@ def handle_message():
         response: A tuple containing a JSON response and an HTTP status code.
     """
     body = request.get_json()
-    logging.info(f"request body: {body}")
+    # logging.info(f"request body: {body}")
 
     # Check if it's a WhatsApp status update
     if (
