@@ -88,3 +88,6 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+# Exlcude the database file
+.db

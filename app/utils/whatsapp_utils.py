@@ -2,6 +2,8 @@ import logging
 from flask import current_app, jsonify
 import json
 import requests
+from app.services.openai_service import generate_response
+import re
 
 
 def log_http_response(response):
@@ -49,11 +51,36 @@ def send_message(data):
         return response
 
 
+def process_text_for_whatsapp(text):
+    # Remove brackets
+    pattern = r"\【.*?\】"
+    # Substitute the pattern with an empty string
+    text = re.sub(pattern, "", text).strip()
+
+    # Pattern to find double asterisks including the word(s) in between
+    pattern = r"\*\*(.*?)\*\*"
+
+    # Replacement pattern with single asterisks
+    replacement = r"*\1*"
+
+    # Substitute occurrences of the pattern with the replacement
+    whatsapp_style_text = re.sub(pattern, replacement, text)
+
+    return whatsapp_style_text
+
+
 def process_whatsapp_message(body):
+    wa_id = body["entry"][0]["changes"][0]["value"]["contacts"][0]["wa_id"]
+    name = body["entry"][0]["changes"][0]["value"]["contacts"][0]["profile"]["name"]
+
     message = body["entry"][0]["changes"][0]["value"]["messages"][0]
     message_body = message["text"]["body"]
-    text = message_body.upper()
-    data = get_text_message_input(current_app.config["RECIPIENT_WAID"], text)
+
+    # TODO: implement custom function here
+    response = generate_response(message_body, wa_id, name)
+    response = process_text_for_whatsapp(response)
+
+    data = get_text_message_input(current_app.config["RECIPIENT_WAID"], response)
     send_message(data)
 
 
