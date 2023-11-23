@@ -54,6 +54,7 @@ def run_assistant(thread, name):
     )
 
     # Wait for completion
+    # https://platform.openai.com/docs/assistants/how-it-works/runs-and-run-steps#:~:text=under%20failed_at.-,Polling%20for%20updates,-In%20order%20to
     while run.status != "completed":
         # Be nice to the API
         time.sleep(0.5)
