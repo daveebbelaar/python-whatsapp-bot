@@ -45,15 +45,17 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 
 ## Step 2: Send Messages with the API
 
-- Obtain a 24-hour access token from the API access section.
-- It will show an example of how to send messages using a `curl` command which can be send from the terminal or with a tool like Postman.
-- Let's convert that into a [Python function with the request library](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/start/whatsapp_quickstart.py).
-- You will receive a "Hello World" message (Expect a 60-120 second delay for the message).
-- Create a system user at the Meta Business account level. Here, you can create another access token that will work for longer than the 24-hour access token.
-- Select the app, and then choose how long the access token will be valid. You can choose 60 days or never expire.
-- Select all the permissions, as I was running into errors when I only selected the WhatsApp ones.
-- Confirm and copy the access code.
-- On the System Users page, configure the assets for your System User, assigning your WhatsApp app with full control. Don't forget to click the Save Changes button.
+1. Obtain a 24-hour access token from the API access section.
+2. It will show an example of how to send messages using a `curl` command which can be send from the terminal or with a tool like Postman.
+3. Let's convert that into a [Python function with the request library](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/start/whatsapp_quickstart.py).
+4. You will receive a "Hello World" message (Expect a 60-120 second delay for the message).
+
+Creating an access that works longer then 24 hours
+1. Create a system user at the Meta Business account level. Here, you can create another access token that will work for longer than the 24-hour access token.
+2. Select the app, and then choose how long the access token will be valid. You can choose 60 days or never expire.
+3. Select all the permissions, as I was running into errors when I only selected the WhatsApp ones.
+4. Confirm and copy the access code.
+5. On the System Users page, configure the assets for your System User, assigning your WhatsApp app with full control. Don't forget to click the Save Changes button.
 
 Now we have to find the following information on the **App Dashboard**:
 
