@@ -17,6 +17,7 @@ APP_SECRET = os.getenv("APP_SECRET")
 RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 VERSION = os.getenv("VERSION")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+VERSION = os.getenv("VERSION")
 
 # --------------------------------------------------------------
 # Send a template WhatsApp message
@@ -24,7 +25,7 @@ PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 
 
 def send_whatsapp_message():
-    url = f"https://graph.facebook.com/v17.0/{PHONE_NUMBER_ID}/messages"
+    url = f"https://graph.facebook.com/{VERSION}/{PHONE_NUMBER_ID}/messages"
     headers = {
         "Authorization": "Bearer " + ACCESS_TOKEN,
         "Content-Type": "application/json",

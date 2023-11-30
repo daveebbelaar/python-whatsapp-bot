@@ -24,6 +24,10 @@ def get_text_message_input(recipient, text):
     )
 
 
+def uppercase_response(response):
+    return response.upper()
+
+
 def send_message(data):
     headers = {
         "Content-type": "application/json",
@@ -77,8 +81,11 @@ def process_whatsapp_message(body):
     message_body = message["text"]["body"]
 
     # TODO: implement custom function here
-    response = generate_response(message_body, wa_id, name)
-    response = process_text_for_whatsapp(response)
+    response = uppercase_response(message_body)
+
+    # OpenAI Integration
+    # response = generate_response(message_body, wa_id, name)
+    # response = process_text_for_whatsapp(response)
 
     data = get_text_message_input(current_app.config["RECIPIENT_WAID"], response)
     send_message(data)
