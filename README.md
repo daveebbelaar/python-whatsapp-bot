@@ -21,7 +21,7 @@ This guide will walk you through the process of creating a WhatsApp bot using th
       - [Start your app](#start-your-app)
       - [Launch ngrok](#launch-ngrok)
       - [Integrate WhatsApp](#integrate-whatsapp)
-      - [Run Webhooks with WhatsApp and ngrok](#run-webhooks-with-whatsapp-and-ngrok)
+      - [Testing the Integration](#testing-the-integration)
   - [Step 4: Understanding Webhook Security](#step-4-understanding-webhook-security)
       - [Verification Requests](#verification-requests)
       - [Validating Verification Requests](#validating-verification-requests)
@@ -115,12 +115,16 @@ In the Meta App Dashboard, go to WhatsApp > Configuration, then click the Edit b
 3. After you add a webhook to WhatsApp, WhatsApp will submit a validation post request to your application through ngrok. Confirm your localhost app receives the validation get request and logs `WEBHOOK_VERIFIED` in the terminal.
 4. Back to the Configuration page, click Manage.
 5. On the Webhook fields popup, click Subscribe to the **messages** field. Tip: You can subscribe to multiple fields.
+6. If your Flask app and ngrok are running, you can click on "Test" next to messages to test the subscription. You recieve a test message in upper case. If that is the case, your webhook is set up correctly.
 
 
-#### Run Webhooks with WhatsApp and ngrok
+#### Testing the Integration
 Use the phone number associated to your WhatsApp product or use the test number you copied before.
 1. Add this number to your WhatsApp app contacts and then send a message to this number.
 2. Confirm your localhost app receives a message and logs both headers and body in the terminal.
+3. Test if the bot replies back to you in upper case.
+4. You have now succesfully inttegrated the bot! 🎉
+5. Now it's time to acutally build cool things with this.
 
 
 ## Step 4: Understanding Webhook Security
@@ -149,12 +153,6 @@ The verify_token, `meatyhamhock` in the case of this example, is a string that y
 Whenever your endpoint receives a verification request, it must:
 - Verify that the hub.verify_token value matches the string you set in the Verify Token field when you configure the Webhooks product in your App Dashboard (you haven't set up this token string yet).
 - Respond with the hub.challenge value.
-
-Next steps
-- After succesful verification of your Callback URL, you must subscribe to events using the Webhook fields. Click on manage and select all the relevent subscriptions; in our case only `messages`.
-- Receive a test message
-- If your flask app and ngrok are running, you can click on "Test" next to messages to test the subscription. You recieve a test message in upper case. If that is the case, your webhook is set up correctly.
-- You can now also send a message via whatsapp to you bot and it should reply instantly in upper case to you.
 
 #### Validating Payloads
 
