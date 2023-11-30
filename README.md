@@ -1,4 +1,4 @@
-# Building an AI WhatsApp Bot with Python
+# Build AI WhatsApp Bots with Pure Python
 
 This guide will walk you through the process of creating a WhatsApp bot using the Meta (formerly Facebook) Cloud API. We'll also integrate webhook events to receive messages in real-time.
 
@@ -11,7 +11,7 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 
 ## Table of Contents
 
-- [Building an AI WhatsApp Bot with Python](#building-an-ai-whatsapp-bot-with-python)
+- [Build AI WhatsApp Bots with Pure Python](#build-ai-whatsapp-bots-with-pure-python)
   - [Prerequisites](#prerequisites)
   - [Table of Contents](#table-of-contents)
   - [Get Started](#get-started)
@@ -75,7 +75,7 @@ You can only send a template type message as your first message to a user. That'
   
 ### Step 4: Test with a Local Server
 
-Follow these steps:
+Follow these steps from ngroks documentation first:
 
 https://ngrok.com/docs/integrations/whatsapp/webhooks/
 
@@ -83,9 +83,14 @@ https://ngrok.com/docs/integrations/whatsapp/webhooks/
 2. Claim your free domain: https://dashboard.ngrok.com/cloud-edge/domains
 3. Set up authentication token: `ngrok config add-authtoken <YOUR-TOKEN>`
 
+Then refer to the Meta's webhook documentation:
+
 https://developers.facebook.com/docs/graph-api/webhooks/getting-started
 
-#### [Verification Requests](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=process%20these%20requests.-,Verification%20Requests,-Anytime%20you%20configure)
+#### Verification Requests
+
+[Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=process%20these%20requests.-,Verification%20Requests,-Anytime%20you%20configure)
+
 Anytime you configure the Webhooks product in your App Dashboard, we'll send a GET request to your endpoint URL. Verification requests include the following query string parameters, appended to the end of your endpoint URL. They will look something like this:
 
 ```
@@ -97,7 +102,10 @@ GET https://www.your-clever-domain-name.com/webhooks?
 
 First run Flask, then Ngrok
 
-#### [Validating Verification Requests](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=Validating%20Verification%20Requests)
+#### Validating Verification Requests
+
+[Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=Validating%20Verification%20Requests)
+
 Whenever your endpoint receives a verification request, it must:
 - Verify that the hub.verify_token value matches the string you set in the Verify Token field when you configure the Webhooks product in your App Dashboard (you haven't set up this token string yet).
 - Respond with the hub.challenge value.
@@ -108,7 +116,10 @@ Next steps
 - If your flask app and ngrok are running, you can click on "Test" next to messages to test the subscription. You recieve a test message in upper case. If that is the case, your webhook is set up correctly.
 - You can now also send a message via whatsapp to you bot and it should reply instantly in upper case to you.
 
-#### [Validating Payloads](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=int-,Validating%20Payloads,-We%20sign%20all)
+#### Validating Payloads
+
+[Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=int-,Validating%20Payloads,-We%20sign%20all)
+
 WhatsApp signs all Event Notification payloads with a SHA256 signature and include the signature in the request's X-Hub-Signature-256 header, preceded with sha256=. You don't have to validate the payload, but you should.
 
 To validate the payload:
