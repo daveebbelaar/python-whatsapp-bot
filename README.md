@@ -1,6 +1,6 @@
 # Build AI WhatsApp Bots with Pure Python
 
-This guide will walk you through the process of creating a WhatsApp bot using the Meta (formerly Facebook) Cloud API. We'll also integrate webhook events to receive messages in real-time.
+This guide will walk you through the process of creating a WhatsApp bot using the Meta (formerly Facebook) Cloud API with pure Python, and Flask particular. We'll also integrate webhook events to receive messages in real-time and use OpenAI to generate AI responses. For more information on the structure of the Flask application, you can refer to [this documentation](https://github.com/daveebbelaar/airbnb-whatsapp-bot/tree/main/app).
 
 ## Prerequisites
 
