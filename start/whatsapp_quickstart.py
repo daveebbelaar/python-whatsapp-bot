@@ -48,6 +48,8 @@ print(response.json())
 # Send a custom text WhatsApp message
 # --------------------------------------------------------------
 
+# NOTE: First reply to the message from the user in WhatsApp!
+
 
 def get_text_message_input(recipient, text):
     return json.dumps(
