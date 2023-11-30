@@ -42,7 +42,7 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 
 ## Step 1: Select Phone Numbers
 
-- Select the business account.
+- Make sure WhatsApp is added to your App.
 - You begin with a test number that you can use to send messages to up to 5 numbers.
 - Go to API Setup and locate the test number from which you will be sending messages.
 - Here, you can also add numbers to send messages to. Enter your **own WhatsApp number**.
