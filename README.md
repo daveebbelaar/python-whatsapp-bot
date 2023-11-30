@@ -65,7 +65,7 @@ Now we have to find the following information on the **App Dashboard**:
 - **VERSION**: "v18.0" (The latest version of the Meta Graph API)
 - **ACCESS_TOKEN**: "<YOUR-SYSTEM-USER-ACCESS-TOKEN>" (Created in the previous step)
 
-You can only send a template type message as your first message to a user. That's why you have to send a reply first before we continue. Took me 2 hours to figure this out.
+> You can only send a template type message as your first message to a user. That's why you have to send a reply first before we continue. Took me 2 hours to figure this out.
 
 
 ## Step 3: Configure Webhooks to Receive Messages
