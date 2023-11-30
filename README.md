@@ -18,11 +18,16 @@ This guide will walk you through the process of creating a WhatsApp bot using th
   - [Step 1: Select Phone Numbers](#step-1-select-phone-numbers)
   - [Step 2: Send Messages with the API](#step-2-send-messages-with-the-api)
   - [Step 3: Configure Webhooks to Receive Messages](#step-3-configure-webhooks-to-receive-messages)
-    - [Verification Requests](#verification-requests)
-    - [Validating Verification Requests](#validating-verification-requests)
+      - [Start your app](#start-your-app)
+      - [Launch ngrok](#launch-ngrok)
+      - [Integrate WhatsApp](#integrate-whatsapp)
+      - [Run Webhooks with WhatsApp and ngrok](#run-webhooks-with-whatsapp-and-ngrok)
+  - [Step 4: Understanding Webhook Security](#step-4-understanding-webhook-security)
+      - [Verification Requests](#verification-requests)
+      - [Validating Verification Requests](#validating-verification-requests)
       - [Validating Payloads](#validating-payloads)
-  - [Step 4: Learn about the API and Build Your App](#step-4-learn-about-the-api-and-build-your-app)
-  - [Step 5: Add a Phone Number](#step-5-add-a-phone-number)
+  - [Step 5: Learn about the API and Build Your App](#step-5-learn-about-the-api-and-build-your-app)
+  - [Step 6: Add a Phone Number](#step-6-add-a-phone-number)
   - [Datalumina](#datalumina)
   - [Tutorials](#tutorials)
 
@@ -52,8 +57,8 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 Creating an access that works longer then 24 hours
 1. Create a [system user at the Meta Business account level](https://business.facebook.com/settings/system-users).
 2. On the System Users page, configure the assets for your System User, assigning your WhatsApp app with full control. Don't forget to click the Save Changes button.
-   - [See step 1 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/adding-assets-to-system-user.png)
-   - [See step 2 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/meta-business-system-user-token.png)
+   - [See step 1 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/meta-business-system-user-token.png)
+   - [See step 2 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/adding-assets-to-system-user.png)
 3. Now click `Generate new token` and select the app, and then choose how long the access token will be valid. You can choose 60 days or never expire.
 4. Select all the permissions, as I was running into errors when I only selected the WhatsApp ones.
 5. Confirm and copy the access token.
@@ -71,37 +76,58 @@ Now we have to find the following information on the **App Dashboard**:
 
 ## Step 3: Configure Webhooks to Receive Messages
 
-Plesae note, this is the hardest part of this tutorial.
+> Please note, this is the hardest part of this tutorial.
 
 Create an ngrok account and claim your free domain
 1. Create account: https://dashboard.ngrok.com
 2. Claim your free domain: https://dashboard.ngrok.com/cloud-edge/domains
 3. Set up authentication token: `ngrok config add-authtoken <YOUR-TOKEN>`
 
-Then follow the steps outlined here to set up the webbook with ngrok:
-https://ngrok.com/docs/integrations/whatsapp/webhooks/
+#### Start your app
+- Run your Flask app locally by executing [run.py](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/run.py)
 
-Then refer to the Meta's webhook documentation:
-https://developers.facebook.com/docs/graph-api/webhooks/getting-started
+#### Launch ngrok
 
-How to run ngrok on port 8000:
-`ngrok http --domain=your-domain.ngrok-free.app 8000`
+The steps below are taken from the [ngrok documentation](https://ngrok.com/docs/integrations/whatsapp/webhooks/).
 
-> Make sure to replace `your-domain.ngrok-free.app` with your actual free ngrok domain!
+> You need a static ngrok domain because Meta validates your ngrok domain and certificate!
 
-Make sure that:
-- Your Flask app is running locally by executing [run.py](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/run.py)
-- ngrok is running locally with your free custom domain on `port 8000`
+Once your app is running successfully on localhost, let's get it on the internet securely using ngrok!
 
-In the App Dashboard, go to WhatsApp > Configuration, then click the Edit button.
-- **Callback URL**: This is the URL to which Meta will be sending the events. In the case of **local development**, this should be your ngrok domain + `/webhook`, like this: `https://your-domain.ngrok-free.app/webhook`
-- **Verify Token**: This string is set up by you when you create your webhook endpoint. You can generate a verify token here or pick any string you like: https://it-tools.tech/token-generator. Make sure to update this in your `VERIFY_TOKEN` environment variable.
+1. If you're not an ngrok user yet, just sign up for ngrok for free.
+2. Download the ngrok agent.
+3. Go to the ngrok dashboard, click Your Authtoken, and copy your Authtoken.
+4. Follow the instructions to authenticate your ngrok agent. You only have to do this once.
+5. On the left menu, expand Cloud Edge and then click Domains.
+6. On the Domains page, click + Create Domain or + New Domain. (here everyone can start with [one free domain](https://ngrok.com/blog-post/free-static-domains-ngrok-users))
+7. Start ngrok by running the following command in a terminal on your local desktop:
+```
+ngrok http 8000 --domain your-domain.ngrok-free.app
+```
+8. ngrok will display a URL where your localhost application is exposed to the internet (copy this URL for use with Meta).
 
-After saving, return to the Configuration panel, click the Manage button, and subscribe to individual webhook fields. To receive notifications of customer messages, make sure to subscribe to the messages webhook field.
+
+#### Integrate WhatsApp
+
+In the Meta App Dashboard, go to WhatsApp > Configuration, then click the Edit button.
+1. In the Edit webhook's callback URL popup, enter the URL provided by the ngrok agent to expose your application to the internet in the Callback URL field, with /webhooks at the end (i.e. https://myexample.ngrok-free.app/webhooks).
+2. Enter a verification token. This string is set up by you when you create your webhook endpoint. You can pick any string you like. Make sure to update this in your `VERIFY_TOKEN` environment variable.
+3. After you add a webhook to WhatsApp, WhatsApp will submit a validation post request to your application through ngrok. Confirm your localhost app receives the validation get request and logs `WEBHOOK_VERIFIED` in the terminal.
+4. Back to the Configuration page, click Manage.
+5. On the Webhook fields popup, click Subscribe to the **messages** field. Tip: You can subscribe to multiple fields.
+
+
+#### Run Webhooks with WhatsApp and ngrok
+Use the phone number associated to your WhatsApp product or use the test number you copied before.
+1. Add this number to your WhatsApp app contacts and then send a message to this number.
+2. Confirm your localhost app receives a message and logs both headers and body in the terminal.
+
+
+## Step 4: Understanding Webhook Security
 
 Below is some information from the Meta Webhooks API docs about verification and security. It is already implemented in the code, but you can reference it to get a better understanding of what's going on in [security.py](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/app/decorators/security.py)
 
-### Verification Requests
+#### Verification Requests
 
 [Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=process%20these%20requests.-,Verification%20Requests,-Anytime%20you%20configure)
 
@@ -116,7 +142,7 @@ GET https://www.your-clever-domain-name.com/webhooks?
 
 The verify_token, `meatyhamhock` in the case of this example, is a string that you can pick. It doesn't matter what it is as long as you store in the `VERIFY_TOKEN` environment variable.
 
-### Validating Verification Requests
+#### Validating Verification Requests
 
 [Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=Validating%20Verification%20Requests)
 
@@ -141,11 +167,11 @@ To validate the payload:
 - Compare your signature to the signature in the X-Hub-Signature-256 header (everything after sha256=). If the signatures match, the payload is genuine.
 
 
-## Step 4: Learn about the API and Build Your App
+## Step 5: Learn about the API and Build Your App
 
 Review the developer documentation to learn how to build your app and start sending messages. [See documentation](https://developers.facebook.com/docs/whatsapp/cloud-api).
 
-## Step 5: Add a Phone Number
+## Step 6: Add a Phone Number
 
 When you’re ready to use your app for a production use case, you need to use your own phone number to send messages to your users.
 
