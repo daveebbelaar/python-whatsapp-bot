@@ -15,15 +15,15 @@ This guide will walk you through the process of creating a WhatsApp bot using th
   - [Prerequisites](#prerequisites)
   - [Table of Contents](#table-of-contents)
   - [Get Started](#get-started)
-    - [Step 1: Select Phone Numbers](#step-1-select-phone-numbers)
-    - [Step 2: Send Messages with the API](#step-2-send-messages-with-the-api)
-    - [Step 3: Configure Webhooks to Receive Messages](#step-3-configure-webhooks-to-receive-messages)
-    - [Step 4: Test with a Local Server](#step-4-test-with-a-local-server)
-      - [Verification Requests](#verification-requests)
-      - [Validating Verification Requests](#validating-verification-requests)
+  - [Step 1: Select Phone Numbers](#step-1-select-phone-numbers)
+  - [Step 2: Send Messages with the API](#step-2-send-messages-with-the-api)
+  - [Step 3: Configure Webhooks to Receive Messages](#step-3-configure-webhooks-to-receive-messages)
+  - [Step 4: Test with a Local Server](#step-4-test-with-a-local-server)
+    - [Verification Requests](#verification-requests)
+    - [Validating Verification Requests](#validating-verification-requests)
       - [Validating Payloads](#validating-payloads)
-    - [Step 5: Learn about the API and Build Your App](#step-5-learn-about-the-api-and-build-your-app)
-    - [Step 6: Add a Phone Number](#step-6-add-a-phone-number)
+  - [Step 5: Learn about the API and Build Your App](#step-5-learn-about-the-api-and-build-your-app)
+  - [Step 6: Add a Phone Number](#step-6-add-a-phone-number)
   - [Datalumina](#datalumina)
   - [Tutorials](#tutorials)
 
@@ -35,7 +35,7 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 4. **Helpful Guide**: Here's a [Python-based guide](https://developers.facebook.com/blog/post/2022/10/24/sending-messages-with-whatsapp-in-your-python-applications/) for sending messages.
 5. **API Docs for Sending Messages**: Check out [this documentation](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/send-messages).
 
-### Step 1: Select Phone Numbers
+## Step 1: Select Phone Numbers
 
 - Select the business account.
 - You begin with a test number that you can use to send messages to up to 5 numbers.
@@ -43,7 +43,7 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 - Here, you can also add numbers to send messages to. Enter your **own WhatsApp number**.
 - You will receive a code on your phone via WhatsApp to verify your number.
 
-### Step 2: Send Messages with the API
+## Step 2: Send Messages with the API
 
 - Obtain a 24-hour access token from the API access section.
 - It will show an example of how to send messages using a `curl` command which can be send from the terminal or with a tool like Postman.
@@ -66,14 +66,14 @@ Now we have to find the following information on the **App Dashboard**:
 You can only send a template type message as your first message to a user. That's why you have to send a reply first before we continue. Took me 2 hours to figure this out.
 
 
-### Step 3: Configure Webhooks to Receive Messages
+## Step 3: Configure Webhooks to Receive Messages
 
 - In the App Dashboard, go to WhatsApp > Configuration, then click the Edit button.
 - **Callback URL**: This is the URL to which Meta will be sending the events. See the Webhooks Getting Started guide for information on creating the URL.
 - **Verify Token**: This string is set up by you when you create your webhook endpoint. You can generate a verify token here or pick any string you like: https://it-tools.tech/token-generator.
 - After saving, return to the Configuration panel, click the Manage button, and subscribe to individual webhook fields. To receive notifications of customer messages, make sure to subscribe to the messages webhook field.
   
-### Step 4: Test with a Local Server
+## Step 4: Test with a Local Server
 
 Follow these steps from ngroks documentation first:
 
@@ -87,7 +87,7 @@ Then refer to the Meta's webhook documentation:
 
 https://developers.facebook.com/docs/graph-api/webhooks/getting-started
 
-#### Verification Requests
+### Verification Requests
 
 [Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=process%20these%20requests.-,Verification%20Requests,-Anytime%20you%20configure)
 
@@ -102,7 +102,7 @@ GET https://www.your-clever-domain-name.com/webhooks?
 
 First run Flask, then Ngrok
 
-#### Validating Verification Requests
+### Validating Verification Requests
 
 [Source](https://developers.facebook.com/docs/graph-api/webhooks/getting-started#:~:text=Validating%20Verification%20Requests)
 
@@ -126,11 +126,11 @@ To validate the payload:
 - Generate a SHA256 signature using the payload and your app's App Secret.
 - Compare your signature to the signature in the X-Hub-Signature-256 header (everything after sha256=). If the signatures match, the payload is genuine.
 
-### Step 5: Learn about the API and Build Your App
+## Step 5: Learn about the API and Build Your App
 
 Review the developer documentation to learn how to build your app and start sending messages. [See documentation](https://developers.facebook.com/docs/whatsapp/cloud-api).
 
-### Step 6: Add a Phone Number
+## Step 6: Add a Phone Number
 
 When you’re ready to use your app for a production use case, you need to use your own phone number to send messages to your users.
 
