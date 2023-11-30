@@ -2,7 +2,8 @@ import logging
 from flask import current_app, jsonify
 import json
 import requests
-from app.services.openai_service import generate_response
+
+# from app.services.openai_service import generate_response
 import re
 
 
@@ -24,7 +25,8 @@ def get_text_message_input(recipient, text):
     )
 
 
-def uppercase_response(response):
+def generate_response(response):
+    # Return text in uppercase
     return response.upper()
 
 
@@ -81,7 +83,7 @@ def process_whatsapp_message(body):
     message_body = message["text"]["body"]
 
     # TODO: implement custom function here
-    response = uppercase_response(message_body)
+    response = generate_response(message_body)
 
     # OpenAI Integration
     # response = generate_response(message_body, wa_id, name)

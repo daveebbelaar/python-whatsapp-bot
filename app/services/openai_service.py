@@ -6,8 +6,9 @@ import time
 import logging
 
 load_dotenv()
-OPEN_AI_API_KEY = os.getenv("OPEN_AI_API_KEY")
-client = OpenAI(api_key=OPEN_AI_API_KEY)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_ASSISTANT_ID = os.getenv("OPENAI_ASSISTANT_ID")
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 def upload_file(path):
@@ -44,7 +45,7 @@ def store_thread(wa_id, thread_id):
 
 def run_assistant(thread, name):
     # Retrieve the Assistant
-    assistant = client.beta.assistants.retrieve("asst_7Wx2nQwoPWSf710jrdWTDlfE")
+    assistant = client.beta.assistants.retrieve(OPENAI_ASSISTANT_ID)
 
     # Run the assistant
     run = client.beta.threads.runs.create(

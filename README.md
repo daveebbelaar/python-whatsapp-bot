@@ -27,7 +27,8 @@ This guide will walk you through the process of creating a WhatsApp bot using th
       - [Validating Verification Requests](#validating-verification-requests)
       - [Validating Payloads](#validating-payloads)
   - [Step 5: Learn about the API and Build Your App](#step-5-learn-about-the-api-and-build-your-app)
-  - [Step 6: Add a Phone Number](#step-6-add-a-phone-number)
+  - [Step 6: Integrate AI into the Application](#step-6-integrate-ai-into-the-application)
+  - [Step 7: Add a Phone Number](#step-7-add-a-phone-number)
   - [Datalumina](#datalumina)
   - [Tutorials](#tutorials)
 
@@ -123,7 +124,7 @@ Use the phone number associated to your WhatsApp product or use the test number 
 1. Add this number to your WhatsApp app contacts and then send a message to this number.
 2. Confirm your localhost app receives a message and logs both headers and body in the terminal.
 3. Test if the bot replies back to you in upper case.
-4. You have now succesfully inttegrated the bot! 🎉
+4. You have now succesfully integrated the bot! 🎉
 5. Now it's time to acutally build cool things with this.
 
 
@@ -169,7 +170,19 @@ To validate the payload:
 
 Review the developer documentation to learn how to build your app and start sending messages. [See documentation](https://developers.facebook.com/docs/whatsapp/cloud-api).
 
-## Step 6: Add a Phone Number
+## Step 6: Integrate AI into the Application
+
+Now that we have an end to end connection, we can make the bot a little more clever then just shouting at us in upper case. All you have to do is come up with your own `generate_response()` function in [whatsapp_utils.py](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/app/utils/whatsapp_utils.py).
+
+If you want a cookie cutter example to integrate the OpenAI Assistans API with a retrieval tool, then follow these steps.
+1. Watch this video: [OpenAI Assistants Tutorial](https://www.youtube.com/watch?v=0h1ry-SqINc)
+2. Create your own assistant with OpenAI and update your `OPENAI_API_KEY` and `OPENAI_ASSISTANT_ID` in the environment variables.
+3. Provide your assistant with data and instructions
+4. Update [openai_service.py](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/app/services/openai_service.py) to your use case.
+5. Import `generate_reponse` into [whatsapp_utils.py](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/app/utils/)
+6. Update `process_whatsapp_message()` with the new `generate_reponse()` function.
+
+## Step 7: Add a Phone Number
 
 When you’re ready to use your app for a production use case, you need to use your own phone number to send messages to your users.
 
