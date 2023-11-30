@@ -85,6 +85,7 @@ Create an ngrok account and claim your free domain
 3. Set up authentication token: `ngrok config add-authtoken <YOUR-TOKEN>`
 
 #### Start your app
+- Make you have a python installation or environment and install the requirements: `pip install -r requirements.txt`
 - Run your Flask app locally by executing [run.py](https://github.com/daveebbelaar/python-whatsapp-bot/blob/main/run.py)
 
 #### Launch ngrok
