@@ -94,7 +94,7 @@ Once your app is running successfully on localhost, let's get it on the internet
 
 1. If you're not an ngrok user yet, just sign up for ngrok for free.
 2. Download the ngrok agent.
-3. Go to the ngrok dashboard, click Your Authtoken, and copy your Authtoken.
+3. Go to the ngrok dashboard, click Your [Authtoken](https://dashboard.ngrok.com/get-started/your-authtoken), and copy your Authtoken.
 4. Follow the instructions to authenticate your ngrok agent. You only have to do this once.
 5. On the left menu, expand Cloud Edge and then click Domains.
 6. On the Domains page, click + Create Domain or + New Domain. (here everyone can start with [one free domain](https://ngrok.com/blog-post/free-static-domains-ngrok-users))
