@@ -16,7 +16,7 @@ APP_ID = os.getenv("APP_ID")
 APP_SECRET = os.getenv("APP_SECRET")
 RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 VERSION = os.getenv("VERSION")
-PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 VERSION = os.getenv("VERSION")
 
 # --------------------------------------------------------------
@@ -32,7 +32,7 @@ def send_whatsapp_message():
     }
     data = {
         "messaging_product": "whatsapp",
-        "to": YOUR_PHONE_NUMBER,
+        "to": RECIPIENT_WAID,
         "type": "template",
         "template": {"name": "hello_world", "language": {"code": "en_US"}},
     }
