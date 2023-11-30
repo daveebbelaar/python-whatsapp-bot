@@ -53,7 +53,8 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 1. Obtain a 24-hour access token from the API access section.
 2. It will show an example of how to send messages using a `curl` command which can be send from the terminal or with a tool like Postman.
 3. Let's convert that into a [Python function with the request library](https://github.com/daveebbelaar/python-whatsapp-bot/blob/main/start/whatsapp_quickstart.py).
-4. You will receive a "Hello World" message (Expect a 60-120 second delay for the message).
+4. Create a `.env` files based on `example.env` and update the required variables. [Video example here](https://www.youtube.com/watch?v=sOwG0bw0RNU).
+5. You will receive a "Hello World" message (Expect a 60-120 second delay for the message).
 
 Creating an access that works longer then 24 hours
 1. Create a [system user at the Meta Business account level](https://business.facebook.com/settings/system-users).
