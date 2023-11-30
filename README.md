@@ -52,8 +52,8 @@ This guide will walk you through the process of creating a WhatsApp bot using th
 Creating an access that works longer then 24 hours
 1. Create a [system user at the Meta Business account level](https://business.facebook.com/settings/system-users).
 2. On the System Users page, configure the assets for your System User, assigning your WhatsApp app with full control. Don't forget to click the Save Changes button.
-   - [See step 1 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/)
-   - [See step 2 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/)
+   - [See step 1 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/adding-assets-to-system-user.png)
+   - [See step 2 here](https://github.com/daveebbelaar/airbnb-whatsapp-bot/blob/main/img/meta-business-system-user-token.png)
 3. Now click `Generate new token` and select the app, and then choose how long the access token will be valid. You can choose 60 days or never expire.
 4. Select all the permissions, as I was running into errors when I only selected the WhatsApp ones.
 5. Confirm and copy the access token.
