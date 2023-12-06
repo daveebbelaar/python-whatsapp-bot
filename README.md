@@ -136,7 +136,7 @@ Below is some information from the Meta Webhooks API docs about verification and
 Anytime you configure the Webhooks product in your App Dashboard, we'll send a GET request to your endpoint URL. Verification requests include the following query string parameters, appended to the end of your endpoint URL. They will look something like this:
 
 ```
-GET https://www.your-clever-domain-name.com/webhooks?
+GET https://www.your-clever-domain-name.com/webhook?
   hub.mode=subscribe&
   hub.challenge=1158201444&
   hub.verify_token=meatyhamhock
