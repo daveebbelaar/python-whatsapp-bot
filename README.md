@@ -108,7 +108,7 @@ ngrok http 8000 --domain your-domain.ngrok-free.app
 #### Integrate WhatsApp
 
 In the Meta App Dashboard, go to WhatsApp > Configuration, then click the Edit button.
-1. In the Edit webhook's callback URL popup, enter the URL provided by the ngrok agent to expose your application to the internet in the Callback URL field, with /webhooks at the end (i.e. https://myexample.ngrok-free.app/webhooks).
+1. In the Edit webhook's callback URL popup, enter the URL provided by the ngrok agent to expose your application to the internet in the Callback URL field, with /webhook at the end (i.e. https://myexample.ngrok-free.app/webhook).
 2. Enter a verification token. This string is set up by you when you create your webhook endpoint. You can pick any string you like. Make sure to update this in your `VERIFY_TOKEN` environment variable.
 3. After you add a webhook to WhatsApp, WhatsApp will submit a validation post request to your application through ngrok. Confirm your localhost app receives the validation get request and logs `WEBHOOK_VERIFIED` in the terminal.
 4. Back to the Configuration page, click Manage.
