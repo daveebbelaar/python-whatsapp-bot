@@ -77,10 +77,13 @@ def verify():
         return jsonify({"status": "error", "message": "Missing parameters"}), 400
 
 
-@webhook_blueprint.route("/webhook", methods=["POST", "GET"])
+@webhook_blueprint.route("/webhook", methods=["GET"])
+def webhook_get():
+    return verify()
+
+@webhook_blueprint.route("/webhook", methods=["POST"])
 @signature_required
-def webhook():
-    if request.method == "GET":
-        return verify()
-    elif request.method == "POST":
-        return handle_message()
+def webhook_post():
+    return handle_message()
+
+
