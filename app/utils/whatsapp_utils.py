@@ -3,7 +3,7 @@ from flask import current_app, jsonify
 import json
 import requests
 
-# from app.services.openai_service import generate_response
+from app.services.openai_service import generate_response
 import re
 
 
@@ -13,22 +13,40 @@ def log_http_response(response):
     logging.info(f"Body: {response.text}")
 
 
-def get_text_message_input(recipient, text):
-    return json.dumps(
-        {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": recipient,
-            "type": "text",
-            "text": {"preview_url": False, "body": text},
+def get_text_message_input(recipient, text="Hola"):
+    return {
+        "messaging_product": "whatsapp",
+        "to": recipient,
+        "type": "text",
+        "text": {
+            "body": text
         }
-    )
+    }
 
-
+'''
 def generate_response(response):
-    # Return text in uppercase
+   # Return text in uppercase
     return response.upper()
+'''
 
+def cargar_menu_desde_txt():
+    """
+    Lee el contenido de un archivo .txt y lo retorna como un string.
+
+    Parámetros:
+    ruta_archivo (str): Ruta del archivo de texto.
+
+    Retorna:
+    str: Contenido del archivo.
+    """
+    try:
+        with open("app/utils/menu.txt", 'r', encoding='utf-8') as archivo:
+            contenido = archivo.read()
+        return contenido
+    except FileNotFoundError:
+        return "Error: El archivo no se encontró."
+    except Exception as e:
+        return f"Error al leer el archivo: {str(e)}"
 
 def send_message(data):
     headers = {
@@ -39,23 +57,28 @@ def send_message(data):
     url = f"https://graph.facebook.com/{current_app.config['VERSION']}/{current_app.config['PHONE_NUMBER_ID']}/messages"
 
     try:
+        # usamos json=data para que requests lo serialice correctamente
         response = requests.post(
-            url, data=data, headers=headers, timeout=10
-        )  # 10 seconds timeout as an example
-        response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+            url,
+            json=data,
+            headers=headers,
+            timeout=10
+        )
+        response.raise_for_status()
     except requests.Timeout:
         logging.error("Timeout occurred while sending message")
         return jsonify({"status": "error", "message": "Request timed out"}), 408
-    except (
-        requests.RequestException
-    ) as e:  # This will catch any general request exception
+    except requests.RequestException as e:
         logging.error(f"Request failed due to: {e}")
+        if e.response is not None:
+            try:
+                logging.error(f"Meta response body: {e.response.text}")
+            except Exception as decode_error:
+                logging.error(f"Could not decode error body: {decode_error}")
         return jsonify({"status": "error", "message": "Failed to send message"}), 500
     else:
-        # Process the response as normal
         log_http_response(response)
         return response
-
 
 def process_text_for_whatsapp(text):
     # Remove brackets
@@ -83,13 +106,14 @@ def process_whatsapp_message(body):
     message_body = message["text"]["body"]
 
     # TODO: implement custom function here
-    response = generate_response(message_body)
-
-    # OpenAI Integration
-    # response = generate_response(message_body, wa_id, name)
+    # response = cargar_menu_desde_txt()
     # response = process_text_for_whatsapp(response)
 
-    data = get_text_message_input(current_app.config["RECIPIENT_WAID"], response)
+    # OpenAI Integration
+    response = generate_response(message_body, wa_id, name)
+    response = process_text_for_whatsapp(response)
+    
+    data = get_text_message_input(wa_id, response)
     send_message(data)
 
 

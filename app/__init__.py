@@ -10,6 +10,8 @@ def create_app():
     load_configurations(app)
     configure_logging()
 
+    print("ACCESS_TOKEN desde config:", app.config["ACCESS_TOKEN"])
+
     # Import and register blueprints, if any
     app.register_blueprint(webhook_blueprint)
 

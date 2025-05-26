@@ -6,6 +6,7 @@ import logging
 
 def load_configurations(app):
     load_dotenv()
+    # app.config["ACCESS_TOKEN"] = 'EACZD'
     app.config["ACCESS_TOKEN"] = os.getenv("ACCESS_TOKEN")
     app.config["YOUR_PHONE_NUMBER"] = os.getenv("YOUR_PHONE_NUMBER")
     app.config["APP_ID"] = os.getenv("APP_ID")

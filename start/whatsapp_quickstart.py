@@ -40,9 +40,10 @@ def send_whatsapp_message():
 
 
 # Call the function
-response = send_whatsapp_message()
-print(response.status_code)
-print(response.json())
+# response = send_whatsapp_message()
+# print(response.status_code)
+# print(response.json())
+
 
 # --------------------------------------------------------------
 # Send a custom text WhatsApp message
@@ -64,12 +65,12 @@ def get_text_message_input(recipient, text):
 
 
 def send_message(data):
-    headers = {
-        "Content-type": "application/json",
-        "Authorization": f"Bearer {ACCESS_TOKEN}",
-    }
-
     url = f"https://graph.facebook.com/{VERSION}/{PHONE_NUMBER_ID}/messages"
+
+    headers = {
+        "Authorization": f"Bearer {ACCESS_TOKEN}",
+        "Content-type": "application/json",
+    }
 
     response = requests.post(url, data=data, headers=headers)
     if response.status_code == 200:
@@ -83,11 +84,15 @@ def send_message(data):
         return response
 
 
-data = get_text_message_input(
-    recipient=RECIPIENT_WAID, text="Hello, this is a test message."
-)
+# data = get_text_message_input(
+#     recipient=RECIPIENT_WAID, text="¡Bienvenido a Murrah! "
+#     "Aquí las hamburguesas no son cualquier cosa... son totalmente carne de búfalo 🦬"
+#     "¿Antojo de algo diferente y brutalmente sabroso?"
+#     "🍔 Escríbenos y déjate tentar por el sabor salvaje."
+# )
 
-response = send_message(data)
+
+# response = send_message(data)
 
 # --------------------------------------------------------------
 # Send a custom text WhatsApp message asynchronously
@@ -102,7 +107,8 @@ async def send_message(data):
     }
 
     async with aiohttp.ClientSession() as session:
-        url = "https://graph.facebook.com" + f"/{VERSION}/{PHONE_NUMBER_ID}/messages"
+        url = "https://graph.facebook.com" + \
+            f"/{VERSION}/{PHONE_NUMBER_ID}/messages"
         try:
             async with session.post(url, data=data, headers=headers) as response:
                 if response.status == 200:
@@ -130,6 +136,7 @@ def get_text_message_input(recipient, text):
     )
 
 
+'''
 data = get_text_message_input(
     recipient=RECIPIENT_WAID, text="Hello, this is a test message."
 )
@@ -137,3 +144,4 @@ data = get_text_message_input(
 loop = asyncio.get_event_loop()
 loop.run_until_complete(send_message(data))
 loop.close()
+'''
