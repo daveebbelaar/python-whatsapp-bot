@@ -9,6 +9,8 @@ from .utils.whatsapp_utils import (
     is_valid_whatsapp_message,
 )
 
+verify_token = "123456"
+
 webhook_blueprint = Blueprint("webhook", __name__)
 
 
@@ -63,7 +65,7 @@ def verify():
     # Check if a token and mode were sent
     if mode and token:
         # Check the mode and token sent are correct
-        if mode == "subscribe" and token == current_app.config["VERIFY_TOKEN"]:
+        if mode == "subscribe" and token == verify_token:
             # Respond with 200 OK and challenge token from the request
             logging.info("WEBHOOK_VERIFIED")
             return challenge, 200
@@ -75,6 +77,12 @@ def verify():
         # Responds with '400 Bad Request' if verify tokens do not match
         logging.info("MISSING_PARAMETER")
         return jsonify({"status": "error", "message": "Missing parameters"}), 400
+    
+
+
+def log_request_info():
+    logging.info(f"Headers: {request.headers}")
+    logging.info(f"Body: {request.get_data()}")
 
 
 @webhook_blueprint.route("/webhook", methods=["GET"])
@@ -84,6 +92,7 @@ def webhook_get():
 @webhook_blueprint.route("/webhook", methods=["POST"])
 @signature_required
 def webhook_post():
+    # return log_request_info()
     return handle_message()
 
 
