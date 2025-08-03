@@ -38,14 +38,26 @@ def send_message(data):
 
     url = f"https://graph.facebook.com/{current_app.config['VERSION']}/{current_app.config['PHONE_NUMBER_ID']}/messages"
 
+    # Get SSL verification setting
+    verify_ssl = current_app.config.get("VERIFY_SSL", True)
+
     try:
         response = requests.post(
-            url, data=data, headers=headers, timeout=10
+            url, data=data, headers=headers, timeout=10, verify=verify_ssl
         )  # 10 seconds timeout as an example
         response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
     except requests.Timeout:
         logging.error("Timeout occurred while sending message")
         return jsonify({"status": "error", "message": "Request timed out"}), 408
+    except requests.exceptions.SSLError as e:
+        logging.error(f"SSL Certificate error: {e}")
+        if not verify_ssl:
+            return jsonify({"status": "error", "message": "SSL certificate verification failed even with SSL verification disabled"}), 500
+        else:
+            return jsonify({"status": "error", "message": "SSL certificate verification failed. Set VERIFY_SSL=false for development/testing"}), 500
+    except requests.exceptions.ConnectionError as e:
+        logging.error(f"Connection error: {e}")
+        return jsonify({"status": "error", "message": "Connection failed - check network and SSL configuration"}), 500
     except (
         requests.RequestException
     ) as e:  # This will catch any general request exception

@@ -14,6 +14,7 @@ def load_configurations(app):
     app.config["VERSION"] = os.getenv("VERSION")
     app.config["PHONE_NUMBER_ID"] = os.getenv("PHONE_NUMBER_ID")
     app.config["VERIFY_TOKEN"] = os.getenv("VERIFY_TOKEN")
+    app.config["VERIFY_SSL"] = os.getenv("VERIFY_SSL", "true").lower() == "true"
 
 
 def configure_logging():
